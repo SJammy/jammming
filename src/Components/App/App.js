@@ -65,15 +65,12 @@ search(term) {
   render() {
     return (
       <div>
-        <h1>Ja<span class="highlight">mmm</span>ing</h1>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          {/* Add a SearchBar component */}
-          {<SearchBar onSearch="this.search"/>}
+          {<SearchBar onSearch={this.search}/>}
           <div className="App-playlist">
-            {/* Add a SearchResults component */}
-            {<SearchResults searchResults="this.state.searchResults" onAdd="this.addTrack" />}
-            {/* Add a Playlist component */}
-            {<PlayList playlistName="this.state.playlistName" playlistTracks="this.state.playlistTracks" onRemove="this.removeTrack" onNameChange="this.updatePlaylistName" onSave="this.savePlaylist" />}
+            {<SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />}
+            {<PlayList playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />}
           </div>
         </div>
       </div>

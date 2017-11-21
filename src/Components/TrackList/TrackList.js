@@ -9,13 +9,14 @@ class TrackList extends React.Component {
         {
           this.props.tracks.map(track => {
             return (
-              <Track key={track.id} onAdd="this.props.onAdd" onRemove="this.props.onRemove" />
-              (<div>
-                <p>{this.props.track.name}</p>
-                <p>{this.props.track.artist}</p>
-                <p>{this.props.track.album}</p>
-              </div>)
-            );
+              <Track
+                track={track}
+                key={track.id}
+                isReomoval={this.props.isRemoval}
+                onAdd={this.props.onAdd}
+                onRemove={this.props.onRemove}
+              />
+            )
           })
         }
       </div>

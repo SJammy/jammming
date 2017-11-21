@@ -1,7 +1,7 @@
 
 let accessToken;
 const client_id = "0637f2f3e70641e5a22821aaa34cdeaa";
-const redirect_uri = "http://sjam_jammming.surge.sh/";
+const redirect_uri = "http://localhost:3003/";
 
 const Spotify = {
   getAccessToken() {
@@ -19,7 +19,7 @@ const Spotify = {
       window.history.pushState('Access Token', null, '/');
       return accessToken;
     } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=playlist-modify-public&response_type=token`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`;
       window.location = accessUrl;
     }
 
@@ -42,7 +42,7 @@ const Spotify = {
       return jsonResponse.tracks.items.map(track => ({
         id: track.id,
         name: track.name,
-        artist: track.artist[0].name,
+        artist: track.artists[0].name,
         album: track.album.name,
         uri: track.uri
       }));
@@ -57,7 +57,7 @@ const Spotify = {
     let headers = {Authorization: `Bearer  ${accessToken}`};
     let userId;
 
-    return fetch('https://api.spotify.com/v1/me', {headers: headers})
+    return fetch(`https://api.spotify.com/v1/me`, {headers: headers})
     .then(response => response.json())
     .then(jsonResponse => {
       userId = jsonResponse.id;
@@ -69,8 +69,7 @@ const Spotify = {
       .then(response => response.json())
       .then(jsonResponse => {
         let playlistID = jsonResponse.id;
-        return
-          fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistID}/tracks`, {
+        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistID}/tracks`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({uris: trackUris})
